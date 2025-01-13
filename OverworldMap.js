@@ -9,12 +9,20 @@ class OverworldMap {
     this.upperImage.Src = config.upperSrc; // roottops or tree tops on top of the players head
   }
 
-  drawLowerImage(ctx) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx, camera) {
+    ctx.drawImage(
+      this.lowerImage,
+      utils.withGrid(10.5) - camera.x,
+      utils.withGrid(6) - camera.y
+    );
   }
 
-  drawUpperImage(ctx) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx, camera) {
+    ctx.drawImage(
+      this.upperImage,
+      utils.withGrid(10.5) - camera.x,
+      utils.withGrid(6) - camera.y
+    );
   }
 }
 
