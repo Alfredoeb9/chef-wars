@@ -11,17 +11,21 @@ class Overworld {
       // reset the canvas each loop
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Camera
+      // Camera - this can help change the main camera (cut scences then change camera back to main character)
       const camera = this.map.gameObjects.hero;
+
+      //update all objects - much larger maps/objects this needs to be optimized
+      Object.values(this.map.gameObjects).forEach((object) => {
+        object.update({
+          arrow: this.directionInput.direction,
+        });
+      });
 
       //Draw Lower layer
       this.map.drawLowerImage(this.ctx, camera);
 
       // in between Draw Game Objects
       Object.values(this.map.gameObjects).forEach((object) => {
-        object.update({
-          arrow: this.directionInput.direction,
-        });
         object.sprite.draw(this.ctx, camera);
       });
 
