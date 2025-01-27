@@ -20,7 +20,11 @@ class Person extends GameObject {
       this.updatePosition();
     } else {
       // Keyboard ready and detect when a arrow is coming in
-      if (this.isPlayerControlled && state.arrow) {
+      if (
+        !state.map.isCutscenePlaying &&
+        this.isPlayerControlled &&
+        state.arrow
+      ) {
         this.startBehavior(state, {
           type: "walk",
           direction: state.arrow,
@@ -38,6 +42,10 @@ class Person extends GameObject {
     if (behavior.type === "walk") {
       // stop character from hitting object if not free
       if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        behavior.retry &&
+          setTimeout(() => {
+            this.startBehavior(state, behavior);
+          }, 10);
         return;
       }
 
