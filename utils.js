@@ -22,4 +22,13 @@ const utils = {
 
     return { x, y };
   },
+
+  emitEvent(name, detail) {
+    // CustomEvent is a native browser api
+    const event = new CustomEvent(name, {
+      detail,
+    });
+
+    document.dispatchEvent(event);
+  },
 };
