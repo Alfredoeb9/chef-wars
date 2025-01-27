@@ -4,7 +4,32 @@ class OverworldEvent {
     this.event = event;
   }
 
-  stand(resolve) {}
+  stand(resolve) {
+    const who = this.map.gameObjects[this.event.who]; // NPC1, NPC2
+    // fire off a walk instruction on this person
+    who.startBehavior(
+      {
+        map: this.map,
+      },
+      {
+        type: "stand",
+        direction: this.event.direction,
+        time: this.event.time,
+      }
+    );
+
+    // setup handler to complete when correct person is done walking, then resolve event
+    const completeHandler = (e) => {
+      // react to only the one we care about
+      if (e.detail.whoId === this.event.who) {
+        document.removeEventListener("PersonStandComplete", completeHandler);
+        resolve();
+      }
+    };
+
+    // when browser sees this event fire off
+    document.addEventListener("PersonStandComplete", completeHandler);
+  }
 
   walk(resolve) {
     const who = this.map.gameObjects[this.event.who]; // NPC1, NPC2
