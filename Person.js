@@ -3,7 +3,7 @@ class Person extends GameObject {
     super(config);
     // add values specific movement
     this.movingProgressRemaining = 0;
-
+    this.isStanding = false;
     // make sure the player is the only one playable
     this.isPlayerControlled = config.isPlayerControlled || false;
 
@@ -56,11 +56,14 @@ class Person extends GameObject {
     }
 
     if (behavior.type === "stand") {
+      this.isStanding = true;
       setTimeout(() => {
         // when the time has passed fire off even
         utils.emitEvent("PersonStandComplete", {
           whoId: this.id,
         });
+
+        this.isStanding = false;
       }, behavior.time);
     }
   }
