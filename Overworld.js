@@ -42,6 +42,7 @@ class Overworld {
 
   init() {
     this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+    this.map.mountObjects();
 
     // grab input bindings to document "down, right, left, up"
     this.directionInput = new DirectionInput();
