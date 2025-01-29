@@ -12,9 +12,15 @@ class TextMessage {
     this.element.classList.add("textMessage");
 
     this.element.innerHTML = `
-            <p class="textMessage_p">${this.text}</p>
+            <p class="textMessage_p"></p>
             <button class="textMessage_button">Next</button>
         `;
+
+    // init typewriter effect
+    this.revealingText = new RevealingText({
+      element: this.element.querySelector(".textMessage_p"),
+      text: this.text,
+    });
 
     this.element.querySelector("button").addEventListener("click", () => {
       // close the text
@@ -22,19 +28,24 @@ class TextMessage {
     });
 
     this.actionListener = new KeyPressListener("Enter", () => {
-      // remove element
-      this.actionListener.unbind();
       this.done();
     });
   }
 
   done() {
-    this.element.remove();
-    this.onComplete();
+    if (this.revealingText.isDone) {
+      this.element.remove();
+      // remove element
+      this.actionListener.unbind();
+      this.onComplete();
+    } else {
+      this.revealingText.warpToDone();
+    }
   }
 
   init(container) {
     this.createElement();
     container.appendChild(this.element);
+    this.revealingText.init();
   }
 }

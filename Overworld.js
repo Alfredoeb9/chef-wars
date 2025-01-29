@@ -69,7 +69,7 @@ class Overworld {
   }
 
   init() {
-    this.startMap(window.OverworldMaps.DemoRoom);
+    this.startMap(window.OverworldMaps.Kitchen);
 
     this.bindActionInput();
     this.bindHeroPositionCheck();
@@ -86,7 +86,7 @@ class Overworld {
       // { who: "npc1", type: "walk", direction: "up" },
       // { who: "npc1", type: "walk", direction: "left" },
       // { who: "hero", type: "stand", direction: "right", time: 200 },
-      // { type: "textMessage", text: "Why Hello There!" },
+      { type: "textMessage", text: "Why Hello There!" },
       // { who: "npc1", type: "walk", direction: "left" },
       // { who: "npc1", type: "stand", direction: "up", time: 800 },
     ]);
