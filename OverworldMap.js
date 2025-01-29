@@ -62,6 +62,18 @@ class OverworldMap {
     });
   }
 
+  checkForActionCutscene() {
+    const hero = this.gameObjects["hero"];
+    const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction); // check if anyone is in front of person object
+    const match = Object.values(this.gameObjects).find((object) => {
+      return `${object.x}, ${object.y}` === `${nextCoords.x}, ${nextCoords.y}`;
+    });
+
+    if (!this.isCutscenePlaying && match && match.talking.length) {
+      this.startCutscene(match.talking[0].events);
+    }
+  }
+
   addWall(x, y) {
     this.walls[`${x}, ${y}`] = true;
   }
@@ -96,6 +108,19 @@ window.OverworldMaps = {
           { type: "stand", direction: "up", time: 800 },
           { type: "stand", direction: "right", time: 1200 },
           { type: "stand", direction: "up", time: 300 },
+        ],
+        talking: [
+          {
+            events: [
+              {
+                type: "textMessage",
+                text: "Why hello there!",
+                faceHero: "npc1",
+              },
+              { type: "textMessage", text: "Welcome to the cafeteria!" },
+              { who: "hero", type: "stand", direction: "up" },
+            ],
+          },
         ],
       }),
       npc2: new Person({
